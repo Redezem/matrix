@@ -6,7 +6,7 @@ private:
 	int numNodes;
 	void ExtractNodeCount(FILE*);
 	void AssignMatricies();
-	void ExtractNodeConnections(FILE*,int);
+	void ExtractNodeConnections(FILE*);
 public:
 	void AssimilateFile(char*);
 	int* GetConnectionFieldFrom(int);
