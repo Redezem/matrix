@@ -94,7 +94,7 @@ void Morpheus::ExtractNodeConnections(FILE* f)
 	printf("Scanning for connections...\n");
 	while(fscanf(f,"%d %d %d",&fromNode,&toNode,&distance)!=EOF)
 	{
-		graphMatrix[fromNode][toNode]=distance;
+		graphMatrix[fromNode-1][toNode-1]=distance;
 		printf("Found a connection: %d to %d for %d\n",fromNode,toNode,distance);
 	}
 	printf("Scan complete!\n");
@@ -129,7 +129,7 @@ int* Morpheus::GetConnectionFieldFrom(int inNode)
 
 	for(i=0;i<numNodes;i++)
 	{
-		if(graphMatrix[inNode][i]!=0)
+		if(graphMatrix[inNode-1][i]!=0)
 		{
 			outConns[i]=1;
 		}else{
@@ -149,7 +149,7 @@ int Morpheus::Distance(int from, int to)
 		return 0;
 	}
 	//DEBUG; SEGMENTATION FAULTS OR SEGFAULTS IF THEY OCCUR ARE LIKELY TO BE CAUSED BY THIS LINE
-	distance=graphMatrix[from][to];
+	distance=graphMatrix[from-1][to-1];
 	if(distance==0)
 	{
 		printf("Morpheus :: Just been asked the distance between two nodes that are not connected. You may have a problem.\n");
