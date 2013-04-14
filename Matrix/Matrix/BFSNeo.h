@@ -6,7 +6,7 @@ private:
 	SearchNode* CameFrom;
 	SearchNode** Children;
 public:
-	SearchNode(int,SearchNode);
+	SearchNode(int,SearchNode*);
 	~SearchNode();
 	int CheckNumber();
 	void InsertChildren(int, SearchNode**);

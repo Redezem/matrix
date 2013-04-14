@@ -38,5 +38,8 @@
     <ClCompile Include="Morpheus.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BFSNeo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

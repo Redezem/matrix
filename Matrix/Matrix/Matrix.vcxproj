@@ -84,6 +84,7 @@
   <ItemGroup>
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="Morpheus.cpp" />
+    <ClCompile Include="BFSNeo.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
