@@ -9,6 +9,7 @@ public:
 	SearchNode(int,SearchNode*);
 	~SearchNode();
 	int CheckNumber();
+	int NumOfChildren();
 	void InsertChildren(int, SearchNode**);
 };
 
