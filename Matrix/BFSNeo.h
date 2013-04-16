@@ -18,7 +18,8 @@ class BFSNeo
 private:
 	SearchNode** OldExtremities;
 	SearchNode** NewExtremities;
-	int searchCompleteFlag;
+	Morpheus* morphey;
+	int searchCompleteFlag, extremityTicker;
 	void Explore(SearchNode*);
 public:
 	void SearchFor(int,int,Morpheus*);

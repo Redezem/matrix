@@ -11,4 +11,5 @@ public:
 	void AssimilateFile(char*);
 	int* GetConnectionFieldFrom(int);
 	int Distance(int,int);
+	int GetNumOfNodes();
 };

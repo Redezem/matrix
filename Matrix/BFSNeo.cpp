@@ -38,5 +38,18 @@ void SearchNode::InsertChildren(int inNumOfChildren, SearchNode** ChildrenList)
 
 void BFSNeo::Explore(SearchNode* inSearch)
 {
-	
+	int numberOfNodes, i, childCounter;
+	int* childrenArray;
+
+
+	numberOfNodes=morphey.GetNumNodes();
+	childrenArray=morphey.GetConnectionFieldFrom(inSearch->CheckNumber());
+
+	for(i=0;i<numberOfNodes;i++)
+	{
+		if(childrenArray[i]==1)
+		{
+			
+		}
+	}
 }

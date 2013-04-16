@@ -82,7 +82,7 @@ void Morpheus::AssignMatricies()
 		{
 			graphMatrix[i][j]=0; //make those zeroes pop :D
 			totalComplete++;
-			printf("%f percent complete...\n",((float)totalComplete/(float)numNodes)*100.0);
+			printf("%f percent complete...\n",((float)totalComplete/(float)numNodes)*100.0/numNodes);
 		}
 	}
 	printf("Complete!\n");
@@ -155,4 +155,9 @@ int Morpheus::Distance(int from, int to)
 		printf("Morpheus :: Just been asked the distance between two nodes that are not connected. You may have a problem.\n");
 	}
 	return distance;
+}
+
+int Morpheus::GetNumOfNodes()
+{
+	return(numNodes);
 }
