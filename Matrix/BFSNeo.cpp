@@ -48,6 +48,8 @@ void BFSNeo::Explore(SearchNode* inSearch, int goal)
 	SearchNode** OverChildren;
 	SearchNode* Child;
 
+	numberOfNodes=0;
+
 	if(inSearch->CheckNumber()==goal)
 	{
 		searchCompleteFlag=1;
@@ -73,6 +75,7 @@ void BFSNeo::Explore(SearchNode* inSearch, int goal)
 			childrenArray[j]=SolutionArray[childCounter-1-j];
 		}
 		delete SolutionArray;
+		num=childCounter;
 		SolutionArray=new int[childCounter]; //Yes. This is horrible. No. I don't care.
 		for(j=0;j<childCounter;j++)
 		{
@@ -110,7 +113,7 @@ void BFSNeo::Explore(SearchNode* inSearch, int goal)
 	}
 }
 
-int* BFSNeo::SearchFor(int startNode, int endNode, Morpheus* morphey)
+int* BFSNeo::SearchFor(int startNode, int endNode, Morpheus* morphey, int* outNum)
 {
 	SearchNode* firstNode;
 	int i;
@@ -119,6 +122,7 @@ int* BFSNeo::SearchFor(int startNode, int endNode, Morpheus* morphey)
 	OldExtremities=new SearchNode*[200];
 	NewExtremities=new SearchNode*[200];
 	SolutionArray=new int[200];
+	printf("Initialising\n");
 	for(i=0;i<200;i++)
 	{
 		OldExtremities[i]=NULL;
@@ -128,24 +132,29 @@ int* BFSNeo::SearchFor(int startNode, int endNode, Morpheus* morphey)
 	
 	firstNode=new SearchNode(startNode,NULL); //cause it's the first node
 	OldExtremities[0]=firstNode;
+	printf("Setup complete, beginning search...\n");
 	while(searchCompleteFlag==0)
 	{
+		printf("Starting new loop\n");
 		extremityTicker=0;
 		for(i=0;i<200;i++)
 		{
 			if(OldExtremities[i]!=NULL)
 			{
+				printf("Searching extremity %d\n",i);
 				 Explore(OldExtremities[i],endNode);
 			}
 		}
 		OldExtremities=NewExtremities;
 		NewExtremities=new SearchNode*[200];
+		printf("resetting for next loop...\n");
 		for(i=0;i<200;i++)
 		{
-			printf("Searching %d\n",i);
 			NewExtremities[i]=NULL;
 		}
 	}
+	printf("Search complete\n");
 	delete firstNode; //Set the tree on fire, just causally....
+	*outNum=num;
 	return SolutionArray;
 }

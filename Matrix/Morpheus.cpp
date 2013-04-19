@@ -159,5 +159,5 @@ int Morpheus::Distance(int from, int to)
 
 int Morpheus::GetNumOfNodes()
 {
-	return(numNodes);
+	return numNodes;
 }

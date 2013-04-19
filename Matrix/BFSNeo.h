@@ -21,10 +21,10 @@ private:
 	SearchNode** NewExtremities;
 	int* SolutionArray;
 	Morpheus* morphey;
-	int searchCompleteFlag, extremityTicker;
+	int searchCompleteFlag, extremityTicker, num;
 	void Explore(SearchNode*,int);
 public:
-	int* SearchFor(int,int,Morpheus*);
+	int* SearchFor(int,int,Morpheus*,int*);
 };
 
 //WE NEED A POINTER ARRAY OF EXTREMITIES!!
