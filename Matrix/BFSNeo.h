@@ -11,6 +11,7 @@ public:
 	int CheckNumber();
 	int NumOfChildren();
 	void InsertChildren(int, SearchNode**);
+	SearchNode* Reverse();
 };
 
 class BFSNeo
@@ -18,11 +19,12 @@ class BFSNeo
 private:
 	SearchNode** OldExtremities;
 	SearchNode** NewExtremities;
+	int* SolutionArray;
 	Morpheus* morphey;
 	int searchCompleteFlag, extremityTicker;
-	void Explore(SearchNode*);
+	void Explore(SearchNode*,int);
 public:
-	void SearchFor(int,int,Morpheus*);
+	int* SearchFor(int,int,Morpheus*);
 };
 
 //WE NEED A POINTER ARRAY OF EXTREMITIES!!
