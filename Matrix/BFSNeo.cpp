@@ -1,5 +1,6 @@
 #include "BFSNeo.h"
-
+#include <stdlib.h>
+#include <string.h>
 SearchNode::SearchNode(int nodeNum, SearchNode* fromNode)
 {
 	nodeNumber=nodeNum;
@@ -84,7 +85,8 @@ void BFSNeo::Explore(SearchNode* inSearch, int goal)
 	}else{
 	
 		childCounter=0;
-		numberOfNodes=morphey->GetNumOfNodes();
+		numberOfNodes=morphey->GetNumOfNodes(); //debug hack
+	//	numberOfNodes=15;
 		childrenArray=morphey->GetConnectionFieldFrom(inSearch->CheckNumber());
 
 		for(i=0;i<numberOfNodes;i++)
@@ -113,12 +115,13 @@ void BFSNeo::Explore(SearchNode* inSearch, int goal)
 	}
 }
 
-int* BFSNeo::SearchFor(int startNode, int endNode, Morpheus* morphey, int* outNum)
+int* BFSNeo::SearchFor(int startNode, int endNode, Morpheus* morpheyIn, int* outNum)
 {
 	SearchNode* firstNode;
 	int i;
 	searchCompleteFlag=0;
 	extremityTicker=0;
+	morphey=morpheyIn;
 	OldExtremities=new SearchNode*[200];
 	NewExtremities=new SearchNode*[200];
 	SolutionArray=new int[200];
@@ -141,11 +144,12 @@ int* BFSNeo::SearchFor(int startNode, int endNode, Morpheus* morphey, int* outNu
 		{
 			if(OldExtremities[i]!=NULL)
 			{
-				printf("Searching extremity %d\n",i);
-				 Explore(OldExtremities[i],endNode);
+				printf("Searching extremity %d\n",OldExtremities[i]->CheckNumber());
+				Explore(OldExtremities[i],endNode);
 			}
 		}
-		OldExtremities=NewExtremities;
+		//OldExtremities=NewExtremities; Better idea
+		memcpy(OldExtremities, NewExtremities, sizeof(SearchNode*)*200);
 		NewExtremities=new SearchNode*[200];
 		printf("resetting for next loop...\n");
 		for(i=0;i<200;i++)

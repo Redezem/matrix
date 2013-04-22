@@ -16,4 +16,4 @@ BFSNeo.o: BFSNeo.cpp
 	clang++ BFSNeo.cpp -c
 
 clean:
-	rm *.o matrix morphTest
+	rm -f *.o matrix morphTest
