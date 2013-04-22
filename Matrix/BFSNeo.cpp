@@ -12,10 +12,11 @@ SearchNode::~SearchNode()
 	int i;
 	for(i=0;i<numOfChildren;i++)
 	{
+		if(Children!=NULL){
 		if(Children[i]!=NULL)
 		{
 			delete Children[i];
-		}
+		}}
 	}
 }
 
@@ -93,7 +94,7 @@ void BFSNeo::Explore(SearchNode* inSearch, int goal)
 		{
 			if(childrenArray[i]==1)
 			{
-				printf("Found child: %d\n",i);
+				printf("Found child: %d\n",i+1);
 				childCounter++;
 			}
 		}
@@ -104,7 +105,7 @@ void BFSNeo::Explore(SearchNode* inSearch, int goal)
 		{
 			if(childrenArray[i]==1)
 			{
-				Child=new SearchNode(i, inSearch);
+				Child=new SearchNode(i+1, inSearch);
 				NewExtremities[extremityTicker]=Child;
 				extremityTicker++;
 				OverChildren[j]=Child;
@@ -140,6 +141,14 @@ int* BFSNeo::SearchFor(int startNode, int endNode, Morpheus* morpheyIn, int* out
 	{
 		printf("Starting new loop\n");
 		extremityTicker=0;
+		printf("Extremity Nodes are:\n");
+		for(i=0;i<200;i++)
+		{
+			if(OldExtremities[i]!=NULL)
+			{
+				printf("%d\n",OldExtremities[i]->CheckNumber());
+			}
+		}
 		for(i=0;i<200;i++)
 		{
 			if(OldExtremities[i]!=NULL)
@@ -147,6 +156,16 @@ int* BFSNeo::SearchFor(int startNode, int endNode, Morpheus* morpheyIn, int* out
 				printf("Searching extremity %d\n",OldExtremities[i]->CheckNumber());
 				Explore(OldExtremities[i],endNode);
 			}
+			if(searchCompleteFlag==1)
+			{
+				printf("BFSNeo :: Hold up a sec\n");
+				break;
+			}
+		}
+		if(searchCompleteFlag==1)
+		{
+			printf("BFSNeo :: Found the spoon\n");
+			continue;
 		}
 		//OldExtremities=NewExtremities; Better idea
 		memcpy(OldExtremities, NewExtremities, sizeof(SearchNode*)*200);
