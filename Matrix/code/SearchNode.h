@@ -1,7 +1,7 @@
 /*
------------------------------
-Morpheus: Search Graph Object
------------------------------
+------------------------------
+Common Search Tree Node Object
+------------------------------
 
 A Redezrian Production
 
@@ -22,21 +22,22 @@ This file is part of Matrix.
     You should have received a copy of the GNU General Public License
     along with Matrix.  If not, see <http://www.gnu.org/licenses/>.
 
+
 */
 
+#pragma once
 
-#include <stdio.h>
-class Morpheus
+class SearchNode
 {
 private:
-	int** graphMatrix;
-	int numNodes;
-	void ExtractNodeCount(FILE*);
-	void AssignMatricies();
-	void ExtractNodeConnections(FILE*);
+	int nodeNumber,numOfChildren;
+	SearchNode* CameFrom;
+	SearchNode** Children;
 public:
-	void AssimilateFile(char*);
-	int* GetConnectionFieldFrom(int);
-	int Distance(int,int);
-	int GetNumOfNodes();
+	SearchNode(int,SearchNode*);
+	~SearchNode();
+	int CheckNumber();
+	int NumOfChildren();
+	void InsertChildren(int, SearchNode**);
+	SearchNode* Reverse();
 };

@@ -1,7 +1,7 @@
 /*
------------------------------
-Morpheus: Search Graph Object
------------------------------
+------------------------------
+Common Search Tree Node Object
+------------------------------
 
 A Redezrian Production
 
@@ -22,21 +22,48 @@ This file is part of Matrix.
     You should have received a copy of the GNU General Public License
     along with Matrix.  If not, see <http://www.gnu.org/licenses/>.
 
+
+
 */
 
-
-#include <stdio.h>
-class Morpheus
+#include "SearchNode.h"
+#include <stdlib.h>
+SearchNode::SearchNode(int nodeNum, SearchNode* fromNode)
 {
-private:
-	int** graphMatrix;
-	int numNodes;
-	void ExtractNodeCount(FILE*);
-	void AssignMatricies();
-	void ExtractNodeConnections(FILE*);
-public:
-	void AssimilateFile(char*);
-	int* GetConnectionFieldFrom(int);
-	int Distance(int,int);
-	int GetNumOfNodes();
-};
+	nodeNumber=nodeNum;
+	CameFrom=fromNode;
+}
+
+SearchNode::~SearchNode()
+{
+	int i;
+	for(i=0;i<numOfChildren;i++)
+	{
+		if(Children!=NULL){
+		if(Children[i]!=NULL)
+		{
+			delete Children[i];
+		}}
+	}
+}
+
+int SearchNode::CheckNumber()
+{
+	return nodeNumber;
+}
+
+int SearchNode::NumOfChildren()
+{
+	return numOfChildren;
+}
+
+void SearchNode::InsertChildren(int inNumOfChildren, SearchNode** ChildrenList)
+{
+	numOfChildren=inNumOfChildren;
+	Children=ChildrenList;
+}
+
+SearchNode* SearchNode::Reverse()
+{
+	return CameFrom;
+}

@@ -1,19 +1,19 @@
 all:	matrix
 
-matrix: Matrix.o Morpheus.o BFSNeo.o
-	clang++ Matrix.o Morpheus.o BFSNeo.o -o matrix
+matrix: Matrix.o Morpheus.o BFSNeo.o SearchNode.o
+	clang++ Matrix.o Morpheus.o BFSNeo.o SearchNode.o -o matrix
 
-morphTest: Matrix.o Morpheus.o
-	clang++ Matrix.o Morpheus.o -o morphTest
+Matrix.o: code/Matrix.cpp
+	clang++ code/Matrix.cpp -c
 
-Matrix.o: Matrix.cpp
-	clang++ Matrix.cpp -c
+Morpheus.o: code/Morpheus.cpp
+	clang++ code/Morpheus.cpp -c
 
-Morpheus.o: Morpheus.cpp
-	clang++ Morpheus.cpp -c
+BFSNeo.o: code/BFSNeo.cpp
+	clang++ code/BFSNeo.cpp -c
 
-BFSNeo.o: BFSNeo.cpp
-	clang++ BFSNeo.cpp -c
+SearchNode.o: code/SearchNode.cpp
+	clang++ code/SearchNode.cpp -c
 
 clean:
-	rm -f *.o matrix morphTest
+	rm -f *.o matrix 

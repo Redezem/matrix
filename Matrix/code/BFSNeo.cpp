@@ -24,46 +24,6 @@ This file is part of Matrix.
 #include "BFSNeo.h"
 #include <stdlib.h>
 #include <string.h>
-SearchNode::SearchNode(int nodeNum, SearchNode* fromNode)
-{
-	nodeNumber=nodeNum;
-	CameFrom=fromNode;
-}
-
-SearchNode::~SearchNode()
-{
-	int i;
-	for(i=0;i<numOfChildren;i++)
-	{
-		if(Children!=NULL){
-		if(Children[i]!=NULL)
-		{
-			delete Children[i];
-		}}
-	}
-}
-
-int SearchNode::CheckNumber()
-{
-	return nodeNumber;
-}
-
-int SearchNode::NumOfChildren()
-{
-	return numOfChildren;
-}
-
-void SearchNode::InsertChildren(int inNumOfChildren, SearchNode** ChildrenList)
-{
-	numOfChildren=inNumOfChildren;
-	Children=ChildrenList;
-}
-
-SearchNode* SearchNode::Reverse()
-{
-	return CameFrom;
-}
-
 //BFSNeo
 
 void BFSNeo::Explore(SearchNode* inSearch, int goal)

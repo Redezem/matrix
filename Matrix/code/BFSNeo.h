@@ -1,4 +1,7 @@
 /*
+-------------------------
+BFSNeo: BFS Search Object
+-------------------------
 
 A Redezrian Production
 
@@ -21,22 +24,8 @@ This file is part of Matrix.
 
 */
 
-
 #include "Morpheus.h"
-class SearchNode
-{
-private:
-	int nodeNumber,numOfChildren;
-	SearchNode* CameFrom;
-	SearchNode** Children;
-public:
-	SearchNode(int,SearchNode*);
-	~SearchNode();
-	int CheckNumber();
-	int NumOfChildren();
-	void InsertChildren(int, SearchNode**);
-	SearchNode* Reverse();
-};
+#include "SearchNode.h"
 
 class BFSNeo
 {
@@ -50,5 +39,3 @@ private:
 public:
 	int* SearchFor(int,int,Morpheus*,int*);
 };
-
-//WE NEED A POINTER ARRAY OF EXTREMITIES!!
