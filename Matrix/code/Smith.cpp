@@ -25,16 +25,25 @@ This file is part of Matrix.
 
 
 */
-#pragma once
-class Smith{
-	private:
-	char* TranslationArray; //array to translate between user "characters" and matrix "IDs"
-	int numberOfElements; //to keep a track of how big said array is
-	void FindNumberOfElements(char*); //uses the node connections sheet to identify the number of elements
-	void ConstructTranslationArray(char*); //populates the translation array using the node connections sheet
-	char* Translate(char*,char*); //takes in a node conn file and a heuristic file and returns a translated page
-	FILE* OpenFile(char*,char*); //nice wrapper for file opening, cause there's a lot of this
-	public:
-	char* MakeTranslated(char*,char*); //initial tranlsation function
-	int WhatIs(char); //post initiation translation function
-};
+#include "Smith.h"
+#include <stdlib.h>
+#include <stdio.h>
+
+FILE* Smith::OpenFile(char* inFileNme,char* mode)
+{
+	FILE* filePoint;
+	filePoint=fopen(inFileNme,mode);
+	if (filePoint=NULL)	
+	{
+		printf("Smith:: A file I tried to open does not exist for some reason. Blowing up the Matrix now\n"); //Because nice exits are not so important in this program. Plus not having a file name is going to make the program fail anyway.
+		exit(EXIT_FAILURE);
+	}
+	return filePoint;
+}
+
+void FindNumberOfElements(char* inFile)
+{
+	FILE* f;
+	f=OpenFile(inFile);
+	
+}
