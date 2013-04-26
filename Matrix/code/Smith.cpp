@@ -31,19 +31,64 @@ This file is part of Matrix.
 
 FILE* Smith::OpenFile(char* inFileNme,char* mode)
 {
-	FILE* filePoint;
-	filePoint=fopen(inFileNme,mode);
-	if (filePoint=NULL)	
+	FILE* filePoint; //make me a pointer
+	filePoint=fopen(inFileNme,mode); //Open the file
+	if (filePoint=NULL)	//If it didn't work
 	{
 		printf("Smith:: A file I tried to open does not exist for some reason. Blowing up the Matrix now\n"); //Because nice exits are not so important in this program. Plus not having a file name is going to make the program fail anyway.
 		exit(EXIT_FAILURE);
 	}
-	return filePoint;
+	return filePoint; //Otherwise, all good
 }
 
 void FindNumberOfElements(char* inFile)
 {
 	FILE* f;
+	char tempchar1, tempchar2;
+	int tempDist, flag, i;
+	
 	f=OpenFile(inFile);
 	
+	while(fscanf(f,"%c %c %d", tempchar1, tempchar2, tempDist)!=EOF)
+	{
+		flag=0;
+		for(i=0;i<200;i++)
+		{
+			if(tempchar1==TranslationArray[i])
+			{
+				if(flag==2){
+					flag=3;
+				}else{
+					flag=1;
+				}
+			} else if(tempchar2==TranslationArray[i])
+			{
+				if(flag==1){
+					flag=3;
+				}else{
+					flag=2;
+				}
+			}
+		}
+		if(flag==0)
+		{
+			arrayOfNodes[ticker]=tempInt;
+			ticker++;
+			arrayOfNodes[ticker]=tempInt2;
+			ticker++;
+			printf("Found new nodes: %d, %d\n",tempInt,tempInt2);
+		} else if(flag==1)
+		{
+			arrayOfNodes[ticker]=tempInt2;
+			ticker++;
+			printf("Found new node: %d\n",tempInt2);
+		} else if(flag==2)
+		{
+			arrayOfNodes[ticker]=tempInt;
+			ticker++;
+			printf("Found new node: %d\n",tempInt);
+		}
+
+
+	}
 }
