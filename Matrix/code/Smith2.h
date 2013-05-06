@@ -4,6 +4,7 @@ Smith2: Linked list connection lexicon
 
 */
 
+#pragma once
 
 class SmithUnit
 {
@@ -19,7 +20,7 @@ class SmithHeu
 	public:
 		SmithHeu();
 		char node;
-		int hDist;
+		float hDist;
 		SmithHeu* next;
 };
 class Smith2
@@ -34,7 +35,8 @@ class Smith2
 		~Smith2();
 		int AssimilateFiles(char*,char*);
 		char* GetConnectionFieldFrom(char,int*);
+		char* GetSmartConnectionFieldFrom(char,int*,char);
 		int Distance(char,char);
-		int Heuristic(char);
+		float Heuristic(char);
 		int GetNumNodes();
 };

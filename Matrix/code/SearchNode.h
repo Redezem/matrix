@@ -35,7 +35,7 @@ private:
 	SearchNode* CameFrom;
 	SearchNode** Children;
 public:
-	SearchNode(int,SearchNode*);
+	SearchNode(char,SearchNode*);
 	~SearchNode();
 	char CheckID();
 	int NumOfChildren();

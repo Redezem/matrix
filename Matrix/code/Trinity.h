@@ -6,11 +6,11 @@ class Trinity
 	private:
 		SearchGoalRoute* answer;
 		Smith2* smithy;
-		char goal, start;
+		char goal;
 		int searchCompleteFlag;
 		int Explorator(SearchNode*);
 	public:
-		char* SearchFor(char,char,Smith2*,int*);
+		char* SearchFor(char,int*);
 		Trinity(Smith2*,int);
 		~Trinity();
 };

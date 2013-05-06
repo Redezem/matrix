@@ -37,6 +37,7 @@ int Smith2::AssimilateFiles(char* ConnFile, char* HeuFile)
 	FILE* conF, *heuF;
 	char tempFrom, tempTo, tempTar;
 	int tempDist;
+	float tempHDist;
 	SmithUnit* tempSmith;
 	SmithHeu* tempHeu;
 
@@ -85,11 +86,11 @@ int Smith2::AssimilateFiles(char* ConnFile, char* HeuFile)
 	}
 	printf("Connection strip completed. Initialising Heuristic strip...\n"); 
 	//Note for this part I had to actually edit the Heuristic files. Somebody had used Carriage Return characters. Unix does not support this. Sticking with 0xA (the universal standard) rather than 0xD (the Windows CR option) seems like a good idea, given both OS's support 0xA. Also removed the table header, because it's irrelevant if the file format is consistent. Which it will have to be, becuase it will be in the official documentation.
-	while(fscanf(heuF, "%c %d\n", &tempTar,&tempDist)!=EOF)
+	while(fscanf(heuF, "%c %f\n", &tempTar,&tempHDist)!=EOF)
 	{
 		tempHeu = new SmithHeu();
 		tempHeu->node=tempTar;
-		tempHeu->hDist=tempDist;
+		tempHeu->hDist=tempHDist;
 		tempHeu->next=firstH;
 		firstH=tempHeu;
 		if(lastH==NULL)
@@ -97,7 +98,7 @@ int Smith2::AssimilateFiles(char* ConnFile, char* HeuFile)
 			lastH=tempHeu;
 		}
 		numNodes++;
-		printf("Found new Heuristic. Node %c, Heuristic %d\n",tempTar,tempDist);
+		printf("Found new Heuristic. Node %c, Heuristic %f\n",tempTar,tempHDist);
 	}
 	printf("File Reading complete!\n");
 	return 0;
@@ -136,6 +137,45 @@ char* Smith2::GetConnectionFieldFrom(char targetNode,int* numOfReturned)
 	return returnString;
 }
 
+char* Smith2::GetSmartConnectionFieldFrom(char targetNode,int* numOfReturned, char notThisChar)
+{
+	SmithUnit* cursor;
+	int connCount,i;
+	char* returnString;
+	//Go look through the SmithUnits and find how many connections exist for said node
+	cursor=first;
+	connCount=0;
+	while(cursor!=NULL)
+	{
+		if(cursor->from==targetNode && cursor->to!=notThisChar)
+		{
+			connCount++;
+		}
+		cursor=cursor->next;
+	}
+	*numOfReturned=connCount; //Returning the number of nodes
+	//Go through SmithUnits again and return an array of destination nodes.
+	cursor=first;
+	i=0;
+	if(connCount==0)
+	{
+		return NULL;
+	}else
+	{
+		returnString=new char[connCount];
+		while(cursor!=NULL)
+		{
+			if(cursor->from==targetNode && cursor->to!=notThisChar)
+			{
+				returnString[i]=cursor->to;
+				i++;
+			}
+			cursor=cursor->next;
+		}
+	}
+	return returnString;
+}
+
 int Smith2::Distance(char fromNode, char toNode)
 {
 	//Go look through the SmithUnits for the target connection
@@ -152,7 +192,7 @@ int Smith2::Distance(char fromNode, char toNode)
 	return -1;
 }
 
-int Smith2::Heuristic(char targetNode)
+float Smith2::Heuristic(char targetNode)
 {
 	//Go look through the SmithHeus for the target node
 	SmithHeu* cursor;
@@ -168,7 +208,7 @@ int Smith2::Heuristic(char targetNode)
 	return -1;
 }
 
-int GetNumNodes()
+int Smith2::GetNumNodes()
 {
 	return numNodes;
 }
