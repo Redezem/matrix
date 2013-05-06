@@ -149,7 +149,7 @@ int Smith2::Distance(char fromNode, char toNode)
 		}
 		cursor=cursor->next;
 	}
-	return 0;
+	return -1;
 }
 
 int Smith2::Heuristic(char targetNode)
@@ -166,6 +166,11 @@ int Smith2::Heuristic(char targetNode)
 		cursor=cursor->next;
 	}
 	return -1;
+}
+
+int GetNumNodes()
+{
+	return numNodes;
 }
 
 //-------------------- SMITHUNIT CONSTRUCTOR-------------------------

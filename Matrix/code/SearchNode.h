@@ -30,14 +30,22 @@ This file is part of Matrix.
 class SearchNode
 {
 private:
-	int nodeNumber,numOfChildren;
+	int numOfChildren;
+	char nodeID;
 	SearchNode* CameFrom;
 	SearchNode** Children;
 public:
 	SearchNode(int,SearchNode*);
 	~SearchNode();
-	int CheckNumber();
+	char CheckID();
 	int NumOfChildren();
-	void InsertChildren(int, SearchNode**);
+	void InsertChildren(int, char*r);
+	SearchNode** ReturnChildren();
 	SearchNode* Reverse();
+};
+
+class SearchGoalRoute
+{
+	char thisChar;
+	SearchGoalRoute *next;
 };

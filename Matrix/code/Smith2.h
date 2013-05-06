@@ -36,4 +36,5 @@ class Smith2
 		char* GetConnectionFieldFrom(char,int*);
 		int Distance(char,char);
 		int Heuristic(char);
+		int GetNumNodes();
 };

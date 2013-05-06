@@ -28,9 +28,9 @@ This file is part of Matrix.
 
 #include "SearchNode.h"
 #include <stdlib.h>
-SearchNode::SearchNode(int nodeNum, SearchNode* fromNode)
+SearchNode::SearchNode(char nodeIn, SearchNode* fromNode)
 {
-	nodeNumber=nodeNum;
+	nodeID=nodeIn;
 	CameFrom=fromNode;
 }
 
@@ -47,9 +47,9 @@ SearchNode::~SearchNode()
 	}
 }
 
-int SearchNode::CheckNumber()
+char SearchNode::CheckID()
 {
-	return nodeNumber;
+	return nodeID;
 }
 
 int SearchNode::NumOfChildren()
@@ -57,10 +57,20 @@ int SearchNode::NumOfChildren()
 	return numOfChildren;
 }
 
-void SearchNode::InsertChildren(int inNumOfChildren, SearchNode** ChildrenList)
+void SearchNode::InsertChildren(int inNumOfChildren, char* ChildrenList)
 {
+	int i=0;
 	numOfChildren=inNumOfChildren;
-	Children=ChildrenList;
+	Children=new SearchNode*[numOfChildren];
+	for(i=0;i<numOfChildren;i++)
+	{
+		Children[i]=new SearchNode(ChildrenList[i],this); //OH GOD THE HAX, IT'S BEAUTIFUL
+	}
+}
+
+SearchNode** ReturnChildren()
+{
+	return Children;
 }
 
 SearchNode* SearchNode::Reverse()
