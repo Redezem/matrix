@@ -1,4 +1,6 @@
 #include "Smith2.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 Smith2::~Smith2()
 {
@@ -32,7 +34,7 @@ Smith2::~Smith2()
 
 int Smith2::AssimilateFiles(char* ConnFile, char* HeuFile)
 {
-	FILE* conF, heuF;
+	FILE* conF, *heuF;
 	char tempFrom, tempTo, tempTar;
 	int tempDist;
 	SmithUnit* tempSmith;
@@ -71,7 +73,15 @@ int Smith2::AssimilateFiles(char* ConnFile, char* HeuFile)
 		{
 			last=tempSmith;
 		}
-		printf("Found node. From %c, To %c, Distance %d\n",tempFrom,tempTo,tempDist);
+		//Gotta build the reverse cause undirectional graph
+		tempSmith=new SmithUnit();
+		tempSmith->from=tempTo;
+		tempSmith->to=tempFrom;
+		tempSmith->distance=tempDist;
+		tempSmith->next=first;
+		first=tempSmith;
+		//Don't have to set last, impossible at this point for it to be null
+		printf("Found Connection. From %c, To %c, Distance %d\n",tempFrom,tempTo,tempDist);
 	}
 	printf("Connection strip completed. Initialising Heuristic strip...\n"); 
 	//Note for this part I had to actually edit the Heuristic files. Somebody had used Carriage Return characters. Unix does not support this. Sticking with 0xA (the universal standard) rather than 0xD (the Windows CR option) seems like a good idea, given both OS's support 0xA. Also removed the table header, because it's irrelevant if the file format is consistent. Which it will have to be, becuase it will be in the official documentation.
@@ -95,18 +105,67 @@ int Smith2::AssimilateFiles(char* ConnFile, char* HeuFile)
 
 char* Smith2::GetConnectionFieldFrom(char targetNode,int* numOfReturned)
 {
+	SmithUnit* cursor;
+	int connCount,i;
+	char* returnString;
 	//Go look through the SmithUnits and find how many connections exist for said node
+	cursor=first;
+	connCount=0;
+	while(cursor!=NULL)
+	{
+		if(cursor->from==targetNode)
+		{
+			connCount++;
+		}
+		cursor=cursor->next;
+	}
+	*numOfReturned=connCount; //Returning the number of nodes
 	//Go through SmithUnits again and return an array of destination nodes.
+	cursor=first;
+	i=0;
+	returnString=new char[connCount];
+	while(cursor!=NULL)
+	{
+		if(cursor->from==targetNode)
+		{
+			returnString[i]=cursor->to;
+			i++;
+		}
+		cursor=cursor->next;
+	}
+	return returnString;
 }
 
 int Smith2::Distance(char fromNode, char toNode)
 {
 	//Go look through the SmithUnits for the target connection
+	SmithUnit* cursor;
+	cursor=first;
+	while(cursor!=NULL)
+	{
+		if(cursor->from==fromNode && cursor->to==toNode)
+		{
+			return cursor->distance;
+		}
+		cursor=cursor->next;
+	}
+	return 0;
 }
 
 int Smith2::Heuristic(char targetNode)
 {
 	//Go look through the SmithHeus for the target node
+	SmithHeu* cursor;
+	cursor=firstH;
+	while(cursor!=NULL)
+	{
+		if(cursor->node==targetNode)
+		{
+			return cursor->hDist;
+		}
+		cursor=cursor->next;
+	}
+	return -1;
 }
 
 //-------------------- SMITHUNIT CONSTRUCTOR-------------------------
