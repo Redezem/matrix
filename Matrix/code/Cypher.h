@@ -1,7 +1,7 @@
 /*
-------------------------------
-Common Search Tree Node Object
-------------------------------
+-------------------------
+Cypher: BnB Search Object
+-------------------------
 
 A Redezrian Production
 
@@ -22,33 +22,23 @@ This file is part of Matrix.
     You should have received a copy of the GNU General Public License
     along with Matrix.  If not, see <http://www.gnu.org/licenses/>.
 
-
 */
 
-#pragma once
+#include "Smith2.h"
+#include "SearchNode.h"
 
-class SearchNode
+class Cypher
 {
 private:
-	int numOfChildren, distance;
-	char nodeID;
-	SearchNode* CameFrom;
-	SearchNode** Children;
+	SearchNode** Extremities;
+	SearchGoalRoute* GoalRoute;
+	Smith2* smithy;
+	int searchCompleteFlag;
+	int Explore(SearchNode*);
+	char* Regress(SearchNode*, int*);
+	char goal;
+	FILE* outFile;
 public:
-	SearchNode(char,SearchNode*);
-	~SearchNode();
-	char CheckID();
-	int NumOfChildren();
-	int GetDist();
-	void SetDist(int);
-	void InsertChildren(int, char*);
-	SearchNode** ReturnChildren();
-	SearchNode* Reverse();
-};
+	Cypher(Smith2*,char);
+	char* SearchFor(char,int*);
 
-class SearchGoalRoute
-{
-	public:
-	char thisChar;
-	SearchGoalRoute *next;
-};

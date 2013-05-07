@@ -1,4 +1,4 @@
-Node_ID Distance_to_GoalS 10
+S 10
 A 8
 B 5
 C 1.4

@@ -5,7 +5,6 @@
 Trinity::Trinity(Smith2* inSmith, int inGoal)
 {
 	smithy=inSmith;
-	searchList=NULL;
 	goal=inGoal;
 	searchCompleteFlag=0;
 	answer=NULL;
@@ -13,10 +12,7 @@ Trinity::Trinity(Smith2* inSmith, int inGoal)
 
 Trinity::~Trinity()
 {
-	if(searchList!=NULL)
-	{
-		delete searchList;
-	}
+	//Does nothing now
 }
 
 int Trinity::Explorator(SearchNode* inNode)
@@ -40,18 +36,18 @@ int Trinity::Explorator(SearchNode* inNode)
 	} //Would have returned, no need for an else
 	//So if I'm not the one... what do? Need to make me a set of possible nodes.
 	printf("I am not the goal. Making list of targets\n");
-	if(inNode->CameFrom==NULL) //Gotta do this to make sure we can prune at least one node.
+	if(inNode->Reverse()==NULL) //Gotta do this to make sure we can prune at least one node.
 	{
 		childString=smithy->GetConnectionFieldFrom(inNode->CheckID(), &numOfChildren);
 	}else{
-		childString=smithy->GetSmartConnectionFieldFrom(inNode->CheckID(), &numOfChildren, inNode->CameFrom->CheckID());
+		childString=smithy->GetSmartConnectionFieldFrom(inNode->CheckID(), &numOfChildren, inNode->Reverse()->CheckID());
 	}
 	
 	returnedValue=0;
 	j=numOfChildren;
 	while(returnedValue==0 && j>0) //While we have not found the goal and I'm not out of nodes to search...
 	{
-		if(childString* !=NULL) //cause J's gonna be zero anyway
+		if(childString !=NULL) //cause J's gonna be zero anyway
 		{
 			lowestMemberDist=smithy->Heuristic(childString[0]);
 			searchedChar=childString[0];
@@ -72,6 +68,7 @@ int Trinity::Explorator(SearchNode* inNode)
 			printf("Housekeeping...\n");
 			childString[lowestMember]=childString[j-1];
 			childString[j-1]=searchedChar;
+			j--;
 			//Now continue
 			printf("Beginning probe of node %c\n",searchedChar);
 			returnedValue=Explorator(nextNode);
@@ -88,15 +85,23 @@ int Trinity::Explorator(SearchNode* inNode)
 		myAnswer->thisChar=inNode->CheckID();
 		myAnswer->next=answer;
 		answer=myAnswer;
+		return 1;
 	}else{
 		//we tried, it didn't work
 		printf("Search Nodes exhausted. Returning with a fail.\n");
 		return 0;
 	}
+	//if somehow we ended up here... whatever
+	printf("Something strange has occurred in the Trinity module\n");
+	return 0;
 }
 
 char* Trinity::SearchFor(char startNode,int* outNum)
 {
+	SearchNode* FirstSearch;
+	int searchResult, counter, i;
+	SearchGoalRoute* ansCounter;	
+	char* returnString;
 	
 	FirstSearch=new SearchNode(startNode,NULL);
 	searchResult=Explorator(FirstSearch);
@@ -108,7 +113,7 @@ char* Trinity::SearchFor(char startNode,int* outNum)
 	printf("Search Completed!\n");
 	counter=0;
 	ansCounter=answer;
-	while(cursor!=NULL)
+	while(ansCounter!=NULL)
 	{
 		counter++;
 		ansCounter=ansCounter->next;

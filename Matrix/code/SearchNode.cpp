@@ -68,7 +68,7 @@ void SearchNode::InsertChildren(int inNumOfChildren, char* ChildrenList)
 	}
 }
 
-SearchNode** ReturnChildren()
+SearchNode** SearchNode::ReturnChildren()
 {
 	return Children;
 }
@@ -76,4 +76,14 @@ SearchNode** ReturnChildren()
 SearchNode* SearchNode::Reverse()
 {
 	return CameFrom;
+}
+
+int SearchNode::GetDist()
+{
+	return distance;
+}
+
+void SearchNode::SetDist(int inDist)
+{
+	distance=inDist;
 }
