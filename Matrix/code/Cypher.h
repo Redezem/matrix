@@ -26,7 +26,7 @@ This file is part of Matrix.
 
 #include "Smith2.h"
 #include "SearchNode.h"
-
+#include <stdio.h>
 class Cypher
 {
 private:
@@ -41,4 +41,4 @@ private:
 public:
 	Cypher(Smith2*,char);
 	char* SearchFor(char,int*);
-
+};

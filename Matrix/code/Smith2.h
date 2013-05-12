@@ -5,6 +5,7 @@ Smith2: Linked list connection lexicon
 */
 
 #pragma once
+#include <stdio.h>
 
 class SmithUnit
 {
@@ -31,6 +32,7 @@ class Smith2
 		SmithHeu* firstH;
 		SmithHeu* lastH;
 		int numNodes;
+		void PreProcessHeuFile(FILE*);
 	public:
 		~Smith2();
 		int AssimilateFiles(char*,char*);

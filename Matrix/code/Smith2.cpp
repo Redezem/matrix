@@ -1,6 +1,5 @@
-#include "Smith2.h"
-#include <stdio.h>
 #include <stdlib.h>
+#include "Smith2.h"
 
 Smith2::~Smith2()
 {
@@ -32,6 +31,37 @@ Smith2::~Smith2()
 	// Aaaaaaand done. It's been nice working with you Smith. Now self destruct.
 }
 
+void Smith2::PreProcessHeuFile(FILE* inFile)
+{
+	FILE* tempFile;
+	char theChar, fakestring[100];
+	tempFile=fopen("temp.heu","w");
+	theChar=fgetc(inFile);
+	while(theChar!=EOF)
+	{
+		if(theChar=='\r')
+		{ 
+			fputc('\n',tempFile);
+		}
+		else
+		{
+			fputc(theChar,tempFile);
+		}
+		theChar=fgetc(inFile);
+	}
+	fclose(inFile);
+	fclose(tempFile);
+	inFile=fopen("temp.heu", "r");
+	theChar=fgetc(inFile);
+	rewind(inFile);
+	if(theChar!='S') //Must start with S as the "source" node.
+	{
+		fgets(fakestring, 100, inFile);
+		fgets(fakestring, 100, inFile);
+	}
+
+}
+
 int Smith2::AssimilateFiles(char* ConnFile, char* HeuFile)
 {
 	FILE* conF, *heuF;
@@ -40,6 +70,7 @@ int Smith2::AssimilateFiles(char* ConnFile, char* HeuFile)
 	float tempHDist;
 	SmithUnit* tempSmith;
 	SmithHeu* tempHeu;
+
 
 	conF=fopen(ConnFile,"r");
 	heuF=fopen(HeuFile,"r");
@@ -59,9 +90,11 @@ int Smith2::AssimilateFiles(char* ConnFile, char* HeuFile)
 		printf("Error! Heuristic File does not exist! You will have to run the import function again!\n");
 		return 1;
 	}
+	printf("Preprocessing heuristic file...\n");
+	PreProcessHeuFile(heuF);
 
 	printf("Discovered import files, initialising connection strip...\n");
-	
+
 	while(fscanf(conF,"%c %c %d\n", &tempFrom, &tempTo, &tempDist)!=EOF)
 	{
 		tempSmith=new SmithUnit();
