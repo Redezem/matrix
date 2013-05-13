@@ -163,22 +163,22 @@ char* Cypher::SearchFor(char from,int* numReturned)
 	}
 	printf("made it to the far side!\n");
 	//when finished
+	//Regress the answer to the returnstring
 	returnString=Regress(Extremities[lowestNode],numReturned);
 	fprintf(outFile, "Solution Path:\n%s -- %d\n----------------------\n",returnString, Extremities[lowestNode]->GetDist());
+	//remove the answer from the extremities
 	Extremities[lowestNode]=NULL;
+	//for each node in the extremities
 	for(i=0;i<200;i++)
 	{
 		if(Extremities[i]!=NULL)
 		{
+			//regress into a file
 			fprintf(outFile, "%s -- %d\n", Regress(Extremities[i],&result),Extremities[i]->GetDist()); //cause we don't care what the number is really
 		}
 	}
-	delete firstNode;
-	return returnString;
-	//Regress the answer to the returnstring
-	//remove the answer from the extremities
-	//for each node in the extremities
-	//regress into a file
 	//delete the first node, set fire to the tree
+	delete firstNode;
 	//return the string
+	return returnString;
 }
