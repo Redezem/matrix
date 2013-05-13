@@ -12,10 +12,11 @@ Architect::Architect(char* fileName)
 {
 	FILE* f;
 	Screen* theScreen;
-	char inX,inY,inZ;
+	int inX,inY,inZ;
 
 	printf("Beginning load of nodes\n");
 	numScreens=0;
+	maxVal=0;
 	f=fopen(fileName,"r");
 	while(fscanf(f,"%d %d %d\n",&inX,&inY,&inZ)!=EOF)
 	{
@@ -26,6 +27,15 @@ Architect::Architect(char* fileName)
 		theScreen->next=ScreenList;
 		ScreenList=theScreen;
 		numScreens++;
+		printf("Found %d %d %d!\n",inX,inY,inZ);
+		if(inX>maxVal)
+		{
+			maxVal=inX;
+		}
+		if(inY>maxVal)
+		{
+			maxVal=inY;
+		}
 	}
 	printf("Load Complete!\n");
 	fclose(f);
@@ -60,6 +70,7 @@ Screen** Architect::GetNeighborsStandard(Screen* inScreen, int inRad, int* outNu
 			returnScreenList[numScreenFound]=cursor;
 			numScreenFound++;
 		}
+		cursor=cursor->next;
 	}
 		
 	newList=returnScreenList;
@@ -94,6 +105,7 @@ Screen** Architect::GetNeighborsFromAbove(Screen* inScreen, int inRad, int* outN
 				numScreenFound++;
 			}
 		}
+		cursor=cursor->next;
 	}
 		
 	newList=returnScreenList;
@@ -110,24 +122,43 @@ Screen** Architect::GetNeighborsFromAbove(Screen* inScreen, int inRad, int* outN
 
 int Architect::CheckScreen(Screen* inScreen, Screen* fromScreen, int inRadius)
 {
-	double result,rad,iOne,iTwo,jOne,jTwo,kOne,kTwo;
+	double result,rad,iOne,iTwo,jOne,jTwo;
 	
 	rad=(double)inRadius;
 	iOne=(double)fromScreen->x;
 	jOne=(double)fromScreen->y;
-	kOne=(double)fromScreen->z;
 	iTwo=(double)inScreen->x;
 	jTwo=(double)inScreen->y;
-	kTwo=(double)inScreen->z;
-
+	
 	//And now, the magic of that which I learnt in Maths 101...
-	result=sqrt(pow((iOne-iTwo),2.0)+pow((jOne-jTwo),2.0)+pow((kOne-kTwo),2.0));
+	result=sqrt(pow((iOne-iTwo),2.0)+pow((jOne-jTwo),2.0));
 
 	//Make some nice boundaries...
-	if(result>rad-1 && result<rad+1)
+	if(result<rad)
 	{
 		return 1;
 	}else{
 		return 0;
 	}
+}
+
+int Architect::GetNumScreens()
+{
+	return numScreens;
+}
+int Architect::GetMaxVal()
+{
+	return maxVal;
+}
+
+Screen* Architect::GetNode(int node)
+{
+	int i;
+	Screen* currScreen;
+	currScreen=ScreenList;
+	for(i=0;i<node;i++)
+	{
+		currScreen=currScreen->next;
+	}
+	return currScreen;
 }

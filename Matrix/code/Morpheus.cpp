@@ -1,7 +1,7 @@
 #include <stdlib.h>
-#include "Smith2.h"
+#include "Morpheus.h"
 
-Smith2::~Smith2()
+Morpheus::~Morpheus()
 {
 	SmithUnit* tempSmith;
 	SmithHeu* tempHeu;
@@ -31,7 +31,7 @@ Smith2::~Smith2()
 	// Aaaaaaand done. It's been nice working with you Smith. Now self destruct.
 }
 
-void Smith2::PreProcessHeuFile(FILE* inFile)
+void Morpheus::PreProcessHeuFile(FILE* inFile)
 {
 	FILE* tempFile;
 	char theChar, fakestring[100];
@@ -62,7 +62,7 @@ void Smith2::PreProcessHeuFile(FILE* inFile)
 
 }
 
-int Smith2::AssimilateFiles(char* ConnFile, char* HeuFile)
+int Morpheus::AssimilateFiles(char* ConnFile, char* HeuFile)
 {
 	FILE* conF, *heuF;
 	char tempFrom, tempTo, tempTar;
@@ -137,7 +137,7 @@ int Smith2::AssimilateFiles(char* ConnFile, char* HeuFile)
 	return 0;
 }
 
-char* Smith2::GetConnectionFieldFrom(char targetNode,int* numOfReturned)
+char* Morpheus::GetConnectionFieldFrom(char targetNode,int* numOfReturned)
 {
 	SmithUnit* cursor;
 	int connCount,i;
@@ -170,7 +170,7 @@ char* Smith2::GetConnectionFieldFrom(char targetNode,int* numOfReturned)
 	return returnString;
 }
 
-char* Smith2::GetSmartConnectionFieldFrom(char targetNode,int* numOfReturned, char notThisChar)
+char* Morpheus::GetSmartConnectionFieldFrom(char targetNode,int* numOfReturned, char notThisChar)
 {
 	SmithUnit* cursor;
 	int connCount,i;
@@ -209,7 +209,7 @@ char* Smith2::GetSmartConnectionFieldFrom(char targetNode,int* numOfReturned, ch
 	return returnString;
 }
 
-int Smith2::Distance(char fromNode, char toNode)
+int Morpheus::Distance(char fromNode, char toNode)
 {
 	//Go look through the SmithUnits for the target connection
 	SmithUnit* cursor;
@@ -225,7 +225,7 @@ int Smith2::Distance(char fromNode, char toNode)
 	return -1;
 }
 
-float Smith2::Heuristic(char targetNode)
+float Morpheus::Heuristic(char targetNode)
 {
 	//Go look through the SmithHeus for the target node
 	SmithHeu* cursor;
@@ -241,7 +241,7 @@ float Smith2::Heuristic(char targetNode)
 	return -1;
 }
 
-int Smith2::GetNumNodes()
+int Morpheus::GetNumNodes()
 {
 	return numNodes;
 }

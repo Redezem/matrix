@@ -1,6 +1,6 @@
 /*
 
-Smith2: Linked list connection lexicon
+Morpheus: Linked list connection lexicon
 
 */
 
@@ -24,7 +24,7 @@ class SmithHeu
 		float hDist;
 		SmithHeu* next;
 };
-class Smith2
+class Morpheus
 {
 	private:
 		SmithUnit* first;
@@ -34,7 +34,7 @@ class Smith2
 		int numNodes;
 		void PreProcessHeuFile(FILE*);
 	public:
-		~Smith2();
+		~Morpheus();
 		int AssimilateFiles(char*,char*);
 		char* GetConnectionFieldFrom(char,int*);
 		char* GetSmartConnectionFieldFrom(char,int*,char);

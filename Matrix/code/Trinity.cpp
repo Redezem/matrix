@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-Trinity::Trinity(Smith2* inSmith, int inGoal)
+Trinity::Trinity(Morpheus* inSmith, int inGoal)
 {
 	smithy=inSmith;
 	goal=inGoal;

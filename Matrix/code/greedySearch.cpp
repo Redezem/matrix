@@ -32,7 +32,7 @@ This file is part of Matrix.
 //#include "Morpheus.h"
 //#include "BFSNeo.h"i
 
-#include "Smith2.h"
+#include "Morpheus.h"
 #include "Trinity.h"
 
 void FileInput();
@@ -40,7 +40,7 @@ void ConnFieldTest();
 void DistTest();
 void Searchfunk();
 
-Smith2* smithy;
+Morpheus* smithy;
 Trinity* Search;
 
 int main(int argc, char* argv[])
@@ -48,7 +48,7 @@ int main(int argc, char* argv[])
 /*	int menumode=1;
 	int selection=0;
 */
-	smithy=new Smith2;
+	smithy=new Morpheus;
 /*	printf("Welcome to the Matrix.\n This is a test program, so please be extremely careful, or you will fuck up, and I will laugh.\n");
 	while(menumode!=0)
 	{

@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-Cypher::Cypher(Smith2* inSmith,char inGoal)
+Cypher::Cypher(Morpheus* inSmith,char inGoal)
 {
 	smithy=inSmith;
 	goal=inGoal;

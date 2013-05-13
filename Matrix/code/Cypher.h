@@ -24,7 +24,7 @@ This file is part of Matrix.
 
 */
 
-#include "Smith2.h"
+#include "Morpheus.h"
 #include "SearchNode.h"
 #include <stdio.h>
 class Cypher
@@ -32,13 +32,13 @@ class Cypher
 private:
 	SearchNode** Extremities;
 	SearchGoalRoute* GoalRoute;
-	Smith2* smithy;
+	Morpheus* smithy;
 	int searchCompleteFlag;
 	int Explore(SearchNode*);
 	char* Regress(SearchNode*, int*);
 	char goal;
 	FILE* outFile;
 public:
-	Cypher(Smith2*,char);
+	Cypher(Morpheus*,char);
 	char* SearchFor(char,int*);
 };
