@@ -1,4 +1,4 @@
-// greedySearch.cpp : Defines the entry point for the console application.
+// branchAndBoundSearch.cpp : Defines the entry point for the console application.
 //
 
 /*

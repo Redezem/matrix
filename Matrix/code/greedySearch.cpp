@@ -29,8 +29,6 @@ This file is part of Matrix.
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
-//#include "Morpheus.h"
-//#include "BFSNeo.h"i
 
 #include "Morpheus.h"
 #include "Trinity.h"
